@@ -20,6 +20,9 @@ SUPPORT_URL="http://www.raspbian.org/RaspbianForums"
 BUG_REPORT_URL="http://www.raspbian.org/RaspbianBugs"
 ```
 
+I also have a BLED112 bluetooth dongle plugged in throughout. 
+ 
+
 
 ## Some general installations and configurations
 
