@@ -27,9 +27,60 @@ BUG_REPORT_URL="http://www.raspbian.org/RaspbianBugs"
 ```
 mkdir -p ~/Code/libraries_of_mine/github  
 mkdir -p ~/Code/libraries_of_others/github
+mkdir -p ~/Software/venvs
 ```
 
+```
+sudo apt-get install vim
+
+sudo apt-get install python3-venv
+
+sudo apt-get install libatlas-base-dev
+
+sudo apt-get install python3-scipy
+
+
+python3 -m venv ~/Software/venvs/eegnb-rpi
+
+source ~/Software/venvs/eeg-rpi/bin/activate
+
+pip install ipython
+
+pip install pybind11
+
+
+
 ## Muselsl Installation
+
+in eegnb-rpi environment
+
+pip install -U pip
+pip install muselsl
+
+
+Run muselsl. We get an error:
+
+```
+(eegnb-rpi) pi@raspberrypi:~ $ muselsl list
+OSError: /home/pi/Software/venvs/eegnb-rpi/lib/python3.7/site-packages/pylsl/liblsl32.so: cannot open shared object file: No such file or directory
+
+```
+
+Solution to this is to do some manual hackery. 
+
+
+cd ~/Code/libraries_of_others/github
+git clone https://github.com/sccn/liblsl
+cd liblsl
+bash standalone_compilation_linux.sh
+cp liblsl.so ~/Software/venvs/eegnb-rpi/lib/python3.7/site-packages/pylsl/liblsl32.so
+
+cd ~/
+muselsl list
+
+
+
+```
 
 ## EEG-Notebooks Installation
 
