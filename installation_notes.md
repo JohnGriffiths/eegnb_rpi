@@ -23,6 +23,7 @@ BUG_REPORT_URL="http://www.raspbian.org/RaspbianBugs"
 
 ## Some general installations and configurations
 
+Create some standard folder locations I use
 
 ```
 mkdir -p ~/Code/libraries_of_mine/github  
@@ -30,45 +31,52 @@ mkdir -p ~/Code/libraries_of_others/github
 mkdir -p ~/Software/venvs
 ```
 
+Do global installs for a few programs
+
 ```
-sudo apt-get install vim
+sudo apt-get install vim libatlas-base-dev
+sudo apt-get install python3-venv pthon3-scipy
+```
 
-sudo apt-get install python3-venv
+Create a Python virtual env. We will mostly be staying in here. 
 
-sudo apt-get install libatlas-base-dev
-
-sudo apt-get install python3-scipy
-
-
+```
 python3 -m venv ~/Software/venvs/eegnb-rpi
+```
 
+Activate the env
+
+```
 source ~/Software/venvs/eeg-rpi/bin/activate
+```
 
-pip install ipython
+Some more python installations
 
-pip install pybind11
-
-
-
-## Muselsl Installation
-
-in eegnb-rpi environment
-
+```
 pip install -U pip
+pip install ipython pybind11
+```
+
+
+## Muselsl Basic Installation
+
+The muselsl installer appears to run without erroring
+
+```
 pip install muselsl
+```
 
-
-Run muselsl. We get an error:
+However things aren't yet working properly
 
 ```
 (eegnb-rpi) pi@raspberrypi:~ $ muselsl list
 OSError: /home/pi/Software/venvs/eegnb-rpi/lib/python3.7/site-packages/pylsl/liblsl32.so: cannot open shared object file: No such file or directory
-
 ```
 
-Solution to this is to do some manual hackery. 
 
+To get round this, the following simple hack seems to work:
 
+```
 cd ~/Code/libraries_of_others/github
 git clone https://github.com/sccn/liblsl
 cd liblsl
@@ -76,12 +84,39 @@ bash standalone_compilation_linux.sh
 cp liblsl.so ~/Software/venvs/eegnb-rpi/lib/python3.7/site-packages/pylsl/liblsl32.so
 
 cd ~/
-muselsl list
+```
 
+In other words, re manually compile a `pylsl` C library, rename the output from `liblsl.so` to `liblsl32.so`, and place in the `pylsl` installation folder inside the venv. 
 
+Now, we have success
 
 ```
+(eegnb-rpi) pi@raspberrypi:~ $ muselsl list
+Backend was 'auto' and bluetoothctl was found, using to list muses...
+Searching for Muses, this may take up to 10 seconds...
+Found device Muse-C2F3, MAC Address 00:55:DA:B0:C2:F3
+```
+
+```
+(eegnb-rpi) pi@raspberrypi:~ $ muselsl stream
+Backend was 'auto' and bluetoothctl was found, using to list muses...
+Searching for Muses, this may take up to 10 seconds...
+Found device Muse-C2F3, MAC Address 00:55:DA:B0:C2:F3
+2021-02-16 01:20:14.213 (  12.585s) [        B6F8CAD0]             common.cpp:54    INFO| v1.14.0-29-g6208017f
+Connecting to Muse-C2F3: 00:55:DA:B0:C2:F3...
+Connected.
+Streaming EEG...
+```
+
+So, we are now able to record EEG data on a raspberry pi :)
+
+
+## Muselsl Graphical Viewer(s)
+
+( to add! ) 
+
 
 ## EEG-Notebooks Installation
 
+( to add! ) 
 
