@@ -38,7 +38,7 @@ Do global installs for a few programs
 
 ```
 sudo apt-get install vim libatlas-base-dev
-sudo apt-get install python3-venv pthon3-scipy
+sudo apt-get install python3-venv python3-scipy
 ```
 
 Create a Python virtual env. We will mostly be staying in here. 
