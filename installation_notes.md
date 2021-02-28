@@ -131,7 +131,7 @@ In order to get a successful eeg-notebooks installation in the pi, I had to do t
 Start with the global installs:
 
 ```bash
-sudo apt-get install python3-wxgtk4.0 python3-sip python3-pyqt5
+sudo apt-get install python3-wxgtk4.0 python3-sip python3-pyqt5 libhdf5-dev 
 
 ln -s /usr/lib/python3/dist-packages/wx ~/Software/venvs/eegnb-rpi/lib/python3.7/site-packages/
 
