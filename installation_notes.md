@@ -121,55 +121,68 @@ So, we are now able to record EEG data on a raspberry pi :)
 
 ## EEG-Notebooks Installation
 
-( to add! ) 
+In order to get a successful eeg-notebooks installation in the pi, I had to do three things: 
+
+1. Globally install some libraries with `apt-get` and symlink to the `venv` environment
+2. Change the dependencies list for `psychopy` (put on a separate branch in my `psychopy` fork)
+3. Change the dependencies list for `eeg-notebooks` (put in a separate branch in the main `eeg-notebooks` repo)
 
 
-First, if it of interest, a demonstration that the default installation does not work: 
+Start with the global installs:
 
 ```bash
-git clone https://github.com/neurotechx/eeg-notebooks
-cd eeg-notebooks
+sudo apt-get install python3-wxgtk4.0 python3-sip python3-pyqt5
 
-source ~/Software/venvs/eegnb-rpi/bin/activate
-pip install -e .
+ln -s /usr/lib/python3/dist-packages/wx ~/Software/venvs/eegnb-rpi/lib/python3.7/site-packages/
 
+ln -s /usr/lib/python3/dist-packages/sip.cpython-37m-arm-linux-gnueabihf.so ~/Software/venvs/eegnb-rpi/lib/python3.7/site-packages/sip.cpython-37m-arm-linux-gnueabihf.so
+
+ln -s /usr/lib/python3/dist-packages/PyQt5 ~/Software/venvs/eegnb-rpi/lib/python3.7/site-packages/PyQt5
 ```
 
-For me, at the time of writing (Feb 2021), this fails with multiple errors. 
+Next, initialize the venv:
 
-Breaking it down, just trying to `pip install` psychopy also fails:
+```bash
+source ~/Software/venvs/eegnb-rpi/bin/activate
+```
 
-`pip install psychopy`
+Clone the two repos whose `requirements` I have modified:
 
-The errors complain about `sip` and `pyqt5`
+```bash
+cd ~/Code/libraries_of_mine/github
+git clone https://github.com/johngriffiths/psychopy
+git clone https://github.com/neurotechx/eeg-notebooks
+```
 
+PsychoPy install:
 
+```bash
+cd psychopy
+git checkout eegnb-rpi-v3.2
+pip install -e .
+```
 
-`sudo apt-get install python3-wxgtk4.0 python3-sip`
+EEG-Notebooks install:
 
+```bash
+cd eeg-notebooks
+git checkout eegnb-rpi
+pip install -e .
+```
 
+Test that the eeg-notebooks install has worked:
 
-
-
-
+```bash
+cd ~/
 ipython
 ```
+
 ```python
 from eegnb.experiments.visual_n170 import n170
 n170.present(duration=10)
 ```
 
-Now: 
 
-
-Install `wxpython` and `sip` with `apt-get`
-
-
-```bash
-sudo apt-get install python3-wxpython
-
-sudo apt-get install python3-sip
-```
 
 
  
