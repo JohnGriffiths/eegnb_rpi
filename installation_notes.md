@@ -123,3 +123,55 @@ So, we are now able to record EEG data on a raspberry pi :)
 
 ( to add! ) 
 
+
+First, if it of interest, a demonstration that the default installation does not work: 
+
+```bash
+git clone https://github.com/neurotechx/eeg-notebooks
+cd eeg-notebooks
+
+source ~/Software/venvs/eegnb-rpi/bin/activate
+pip install -e .
+
+```
+
+For me, at the time of writing (Feb 2021), this fails with multiple errors. 
+
+Breaking it down, just trying to `pip install` psychopy also fails:
+
+`pip install psychopy`
+
+The errors complain about `sip` and `pyqt5`
+
+
+
+`sudo apt-get install python3-wxgtk4.0 python3-sip`
+
+
+
+
+
+
+ipython
+```
+```python
+from eegnb.experiments.visual_n170 import n170
+n170.present(duration=10)
+```
+
+Now: 
+
+
+Install `wxpython` and `sip` with `apt-get`
+
+
+```bash
+sudo apt-get install python3-wxpython
+
+sudo apt-get install python3-sip
+```
+
+
+ 
+
+
